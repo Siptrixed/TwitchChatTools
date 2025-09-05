@@ -1,0 +1,50 @@
+﻿<Page x:Class="TwitchChatTools.PageTabs.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TwitchChatTools.PageTabs"
+      xmlns:u="clr-namespace:TwitchChatTools.Utils"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Settings">
+
+    <Grid Margin="-3,-2,-3,-3">
+        <TabControl TabStripPlacement="Left" Margin="1,20,0,0" Padding="0,0,0,0" SelectedIndex="0" >
+            <TabItem Header="{Binding Source={x:Static u:Lang.Instance}, Path=[Twitch]}" Margin="0" IsSelected="True">
+                <Grid>
+                    <TextBlock  x:Name="TwitchDataLabel" Text="{Binding Source={x:Static u:Lang.Instance}, Path=[Loading]}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,10,0" Padding="2,2,2,2"/>
+                    <Button Content="{Binding Source={x:Static u:Lang.Instance}, Path=[ConnectToOutherChannelCaption]}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,40,10,40" Padding="3,1,3,1" Click="ChangeConnectedChannel" Grid.Column="2" Width="200"/>
+                    <Button Content="{Binding Source={x:Static u:Lang.Instance}, Path=[LoginAsOtherUserCaption]}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10" Padding="3,1,3,1" Click="ExitFromTwitchAndClose" Grid.Column="2" Width="200"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static u:Lang.Instance}, Path=[SystemCaption]}" Margin="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="10,10,10,10" VerticalAlignment="Top" Width="100" Grid.Column="0" SelectionChanged="LangSelect_SelectionChanged">
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="Русский"/>
+                    </ComboBox>
+                    <Label Content="{Binding Source={x:Static u:Lang.Instance}, Path=[Language]}" HorizontalAlignment="Left" Margin="10,8,110,10" VerticalAlignment="Top" Grid.Column="0"/>
+                    <CheckBox x:Name="Settings_MinimizeToTray" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[MinimizeToTray]}" Margin="10,10,10,10" VerticalAlignment="Top" Click="MinimizeToTrayChanged" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static u:Lang.Instance}, Path=[Hotkeys]}" Margin="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="{Binding Source={x:Static u:Lang.Instance}, Path=[StopSoundCaption]}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0" Padding="2,2,2,2" Height="20"/>
+                    <TextBox x:Name="StopSoundHotkeySelector" IsReadOnly="True" VerticalAlignment="Top" Margin="0,10,29,0" Height="20" Grid.ColumnSpan="2" KeyUp="StopSoundHotkeySettingKeyUp" KeyDown="StopSoundHotkeySettingKeyDown" Grid.Column="1"/>
+                    <Button Content="␡" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Height="20" Width="20" Margin="0,10,10,0" Click="StopSoundClearHotkey"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Label x:Name="VersionLabel" Content="v0.0.0.1" VerticalAlignment="Top" HorizontalContentAlignment="Right" Padding="2,2,5,2"/>
+    </Grid>
+</Page>
