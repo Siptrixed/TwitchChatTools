@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TwitchChatTools.Twitch;
+﻿using TwitchChatTools.Twitch;
 using TwitchLib.Client.Events;
-using TwitchLib.Communication.Events;
 
 namespace TwitchChatTools.Model.Processing
 {

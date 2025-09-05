@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
-using System.Runtime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 using TwitchChatTools.Model;
 using TwitchChatTools.Twitch;
 using TwitchChatTools.Utils;

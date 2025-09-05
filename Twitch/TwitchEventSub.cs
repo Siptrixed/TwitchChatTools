@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using TwitchChatTools.Model;
 using TwitchLib.Api.Core.Enums;
-using TwitchLib.Client.Events;
-using TwitchLib.EventSub.Core.EventArgs;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 using TwitchLib.EventSub.Websockets;
 

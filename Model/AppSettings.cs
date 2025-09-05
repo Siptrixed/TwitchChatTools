@@ -1,6 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows.Threading;
-using TwitchChatTools.Twitch;
 using TwitchChatTools.Utils;
 using TwitchChatTools.WinApi;
 

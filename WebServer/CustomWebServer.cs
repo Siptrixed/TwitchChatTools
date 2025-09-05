@@ -4,7 +4,6 @@ using System.Net.WebSockets;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using TwitchChatTools.Model;
 using TwitchChatTools.Utils;
 
 namespace TwitchChatTools.WebServer

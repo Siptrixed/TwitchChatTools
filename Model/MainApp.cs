@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Data;
 using TwitchChatTools.Model.Processing;
-using TwitchChatTools.PageTabs;
 using TwitchChatTools.Twitch;
 using TwitchChatTools.Utils;
-using TwitchLib.Api.Helix.Models.ChannelPoints;
 
 namespace TwitchChatTools.Model
 {

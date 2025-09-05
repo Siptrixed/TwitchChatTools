@@ -1,9 +1,7 @@
 ﻿using MessagePack;
 using Newtonsoft.Json;
-using System.Data.SqlTypes;
 using System.IO;
 using System.Security.Cryptography;
-using System.Windows.Input;
 
 namespace TwitchChatTools.Utils
 {
