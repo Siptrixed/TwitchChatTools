@@ -17,7 +17,7 @@
 Программа будет обновляться автоматически. <br>
 Все обновления описаны в [GitHub Releases](https://github.com/Siptrixed/TwitchChatTools/releases)
 
-### Скриншоты
+## Скриншоты
 
 <img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/53ce1810-f1bc-4429-a349-68c25200cb88" />
 
@@ -28,5 +28,4 @@
 ## Благодарность
 
 * **Jagmesh** - [Канал](https://www.twitch.tv/jagmesh)
-* **google_hdc** - [Канал](https://www.twitch.tv/google_hdc)
 * **xin_vt** - [Канал](https://www.twitch.tv/xin_vt)
