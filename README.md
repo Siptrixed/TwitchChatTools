@@ -1,34 +1,34 @@
 # TwitchChatTools
 
-Инструментарий для работы с чатом Twitch во время стрима
-Третья итерация TwitchBot и TwitchBotV2 от Siptrixed (aka ScriptedEngineer)
+РРЅСЃС‚СЂСѓРјРµРЅС‚Р°СЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‡Р°С‚РѕРј Twitch РІРѕ РІСЂРµРјСЏ СЃС‚СЂРёРјР°
+РўСЂРµС‚СЊСЏ РёС‚РµСЂР°С†РёСЏ TwitchBot Рё TwitchBotV2 РѕС‚ Siptrixed (aka ScriptedEngineer)
 
-## Инструкция
+## РРЅСЃС‚СЂСѓРєС†РёСЏ
 
-Ожидается Beta 0.1.0.0
+РћР¶РёРґР°РµС‚СЃСЏ Beta 0.1.0.0
 
-## Скачать
+## РЎРєР°С‡Р°С‚СЊ
 
-Ожидается Alpha 0.0.1.0
+РћР¶РёРґР°РµС‚СЃСЏ Alpha 0.0.1.0
 [GitHub Releases](https://github.com/Siptrixed/TwitchChatTools/releases)
 
-## Обновления
+## РћР±РЅРѕРІР»РµРЅРёСЏ
 
-Программа будет обновляться автоматически.
-Все обновления описаны в [GitHub Releases](https://github.com/Siptrixed/TwitchChatTools/releases)
+РџСЂРѕРіСЂР°РјРјР° Р±СѓРґРµС‚ РѕР±РЅРѕРІР»СЏС‚СЊСЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
+Р’СЃРµ РѕР±РЅРѕРІР»РµРЅРёСЏ РѕРїРёСЃР°РЅС‹ РІ [GitHub Releases](https://github.com/Siptrixed/TwitchChatTools/releases)
 
-### Скриншоты
+### РЎРєСЂРёРЅС€РѕС‚С‹
 
+<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/53ce1810-f1bc-4429-a349-68c25200cb88" />
 
+## РђРІС‚РѕСЂС‹
 
-## Авторы
+* **Siptrixed** - *Р’СЃСЏ СЂР°Р±РѕС‚Р°* - [РљР°РЅР°Р»](https://www.twitch.tv/siptrixed)
 
-* **Siptrixed** - *Вся работа* - [Канал](https://www.twitch.tv/siptrixed)
+## Р‘Р»Р°РіРѕРґР°СЂРЅРѕСЃС‚СЊ
 
-## Благодарность
-
-* **Jagmesh** - *Вдохновитель проекта первой версии* - [Канал](https://www.twitch.tv/jagmesh)
-* **dadyamiga** - *Главный тестер новых фич первой версии* - [Канал](https://www.twitch.tv/dadyamiga)
-* **xin_vt** - *Дочь маминой подруги* - [Канал](https://www.twitch.tv/xin_vt)
-* **google_hdc** - *Просто отличный стример* - [Канал](https://www.twitch.tv/google_hdc)
-* **VANCHOBA** - *Просто хороший стример* - [Канал](https://www.twitch.tv/vanchoba)
+* **Jagmesh** - *Р’РґРѕС…РЅРѕРІРёС‚РµР»СЊ РїСЂРѕРµРєС‚Р° РїРµСЂРІРѕР№ РІРµСЂСЃРёРё* - [РљР°РЅР°Р»](https://www.twitch.tv/jagmesh)
+* **dadyamiga** - *Р“Р»Р°РІРЅС‹Р№ С‚РµСЃС‚РµСЂ РЅРѕРІС‹С… С„РёС‡ РїРµСЂРІРѕР№ РІРµСЂСЃРёРё* - [РљР°РЅР°Р»](https://www.twitch.tv/dadyamiga)
+* **xin_vt** - *Р”РѕС‡СЊ РјР°РјРёРЅРѕР№ РїРѕРґСЂСѓРіРё* - [РљР°РЅР°Р»](https://www.twitch.tv/xin_vt)
+* **google_hdc** - *РџСЂРѕСЃС‚Рѕ РѕС‚Р»РёС‡РЅС‹Р№ СЃС‚СЂРёРјРµСЂ* - [РљР°РЅР°Р»](https://www.twitch.tv/google_hdc)
+* **VANCHOBA** - *РџСЂРѕСЃС‚Рѕ С…РѕСЂРѕС€РёР№ СЃС‚СЂРёРјРµСЂ* - [РљР°РЅР°Р»](https://www.twitch.tv/vanchoba)
