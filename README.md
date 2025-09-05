@@ -1,6 +1,6 @@
 # TwitchChatTools
 
-Инструментарий для работы с чатом Twitch во время стрима
+Инструментарий для работы с чатом Twitch во время стрима. <br>
 Третья итерация TwitchBot и TwitchBotV2 от Siptrixed (aka ScriptedEngineer)
 
 ## Инструкция
