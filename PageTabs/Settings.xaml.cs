@@ -17,13 +17,17 @@ namespace TwitchChatTools.PageTabs
     public partial class Settings : Page
     {
         int keyMode = -1;
-        public static readonly int[] Langs = new int[] { 9, 1049 };
+        public static readonly Dictionary<int, string> Langs = new() {
+            { 9 , "English" },
+            { 1049 , "Русский" }
+        };
 
         public Settings()
         {
             InitializeComponent();
 
-            VersionLabel.Content = $"v{VersionControl.Version}";
+            LangSelect.ItemsSource = Langs;
+            VersionLabel.Content = VersionControl.VersionTitle;
             //UpdateSettingValues();
         }
 
@@ -77,7 +81,7 @@ namespace TwitchChatTools.PageTabs
         {
             StopSoundHotkeySelector.Text = MainApp.Instance.Settings.StopSoundHotkey.ToString();
             Settings_MinimizeToTray.IsChecked = MainApp.Instance.Settings.MinimizeToTray;
-            LangSelect.SelectedIndex = Array.IndexOf(Langs, MainApp.Instance.Settings.SelectedLanguage);
+            LangSelect.SelectedValue = MainApp.Instance.Settings.SelectedLanguage;
             TwitchDataLabel.Text = $"{Lang.Instance["Account"]}: {MainApp.Instance.Account.Login} ({MainApp.Instance.Account.UserID})\r\n" +
                 $"{Lang.Instance["Channel"]}: {MainApp.Instance.Settings.ConnectToUsername} ({MainApp.Instance.Settings.ConnectToUserId})";
         }
@@ -125,7 +129,7 @@ namespace TwitchChatTools.PageTabs
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LangSelect.SelectedIndex == -1) return;
-            MainApp.Instance.Settings.SelectedLanguage = Langs[LangSelect.SelectedIndex];
+            MainApp.Instance.Settings.SelectedLanguage = (int)LangSelect.SelectedValue;
             MainApp.Instance.Settings.ApplyLanguage();
             UpdateSettingValues();
         }

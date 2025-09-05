@@ -36,10 +36,7 @@
             </TabControl>
             <Grid x:Name="FullWindowBanner" Visibility="Visible" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True">
                 <Rectangle HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Fill="{DynamicResource BackgroundColour}" Stroke="{DynamicResource BackgroundColour}"/>
-                <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,-1,39,0" Height="21" FontSize="11" Panel.ZIndex="999" VerticalAlignment="Top" Width="100" Grid.Column="0" SelectionChanged="LangSelect_SelectionChanged">
-                    <ComboBoxItem Content="English"/>
-                    <ComboBoxItem Content="Русский"/>
-                </ComboBox>
+                <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,-1,39,0" Height="21" FontSize="11" Panel.ZIndex="999" VerticalAlignment="Top" Width="100" Grid.Column="0" SelectionChanged="LangSelect_SelectionChanged" SelectedValuePath="Key" DisplayMemberPath="Value"></ComboBox>
                 <Grid x:Name="LoginGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -48,7 +45,7 @@
                     <Label Grid.Row="0" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[OAuthCaption]}" HorizontalAlignment="Center" Margin="10,10,10,10" VerticalAlignment="Bottom" Padding="0,0,0,0" Height="16"/>
                     <Button Grid.Row="1" x:Name="LoginButton" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[Login]}" HorizontalAlignment="Center" Margin="10,10,10,10" VerticalAlignment="Top" Padding="5,0,5,1" Click="OnLoginClick" Height="19" Grid.Column="1"/>
                 </Grid>
-                <Grid x:Name="ChannelToConnectSelector" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid x:Name="ChannelToConnectSelector" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -57,7 +54,39 @@
                     <TextBox Grid.Row="1" x:Name="ChannelToConnectUser" HorizontalAlignment="Center" Margin="10,10,120,10" VerticalAlignment="Top" Height="20" Width="200"/>
                     <Button Grid.Row="1" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[Connect]}" HorizontalAlignment="Center" Margin="210,10,10,10" VerticalAlignment="Top" Padding="5,0,5,1" Click="OnChannelSelectClick" Height="20" Grid.Column="1" Width="100"/>
                 </Grid>
-                <Grid x:Name="PleaseWaitGrid" Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid x:Name="UpdateGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[NewVersionAvailable]}" HorizontalAlignment="Center" Margin="10,0,10,0" VerticalAlignment="Bottom" Padding="0,0,0,0" Height="16"/>
+                    <Grid Grid.Row="1" VerticalAlignment="Center" Visibility="Visible">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[CurrentVersion]}" HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16"/>
+                        <Label Grid.Column="0" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[NewVersion]}" HorizontalAlignment="Left" Margin="10,30,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16"/>
+                        <Label x:Name="CurrentVersionLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16"/>
+                        <Label x:Name="NewVersionLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="10,30,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16"/>
+                        <Label Grid.Row="0" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[WhatsNew]}" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,50,10,10" VerticalAlignment="Top" Padding="0,0,0,0" Height="16">
+                            <Hyperlink NavigateUri="https://github.com/Siptrixed/TwitchChatTools/releases" RequestNavigate="Hyperlink_RequestNavigate">
+                                GitHub Releases
+                            </Hyperlink>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" x:Name="UpdateLaterButton" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[UpdateLater]}" HorizontalAlignment="Right" Margin="10,10,10,10" VerticalAlignment="Top" Padding="5,0,5,1" Click="UpdateLaterButton_Click" Height="19"/>
+                        <Button Grid.Column="1" x:Name="UpdateNowButton" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[UpdateNow]}" HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Padding="5,0,5,1" Height="19" Click="UpdateNowButton_Click" />
+                    </Grid>
+                </Grid>
+                <Grid x:Name="PleaseWaitGrid" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ProgressBar x:Name="HeaderProgressBar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="21" IsIndeterminate="True" Margin="25,-1,138,0" />
                     <Label x:Name="WaitLabel" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[Loading]}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>

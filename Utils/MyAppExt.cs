@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Threading;
@@ -86,6 +87,63 @@ namespace TwitchChatTools.Utils
                 return $"{milliseconds / 60000:N0}min {GetTimeFromMilliseconds(milliseconds % 60000, true)}";
             }
             return $"{milliseconds / 3600000:N0}h {GetTimeFromMilliseconds(milliseconds % 3600000, true)}";
+        }
+        public static async Task CopyToAsync(this Stream source, Stream destination, Action<float>? progress, long totalBytes, CancellationToken cancellationToken = default)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (!source.CanRead)
+                throw new ArgumentException("Has to be readable", nameof(source));
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+            if (!destination.CanWrite)
+                throw new ArgumentException("Has to be writable", nameof(destination));
+
+            int bufferSize = 81920;
+
+            if (source.CanSeek)
+            {
+                long length = totalBytes;
+                long position = source.Position;
+                if (length <= position) // Handles negative overflows
+                {
+                    // There are no bytes left in the stream to copy.
+                    // However, because CopyTo{Async} is virtual, we need to
+                    // ensure that any override is still invoked to provide its
+                    // own validation, so we use the smallest legal buffer size here.
+                    bufferSize = 1;
+                }
+                else
+                {
+                    long remaining = length - position;
+                    if (remaining > 0)
+                    {
+                        // In the case of a positive overflow, stick to the default size
+                        bufferSize = (int)Math.Min(bufferSize, remaining);
+                    }
+                }
+            }
+
+            var buffer = new byte[bufferSize];
+            long totalBytesRead = 0;
+
+            float totalBytesAll = totalBytes;
+            float oldProgressValue = 0;
+            float progressValue = 0;
+
+            int bytesRead;
+            while ((bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) != 0)
+            {
+                await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                totalBytesRead += bytesRead;
+
+                progressValue = totalBytesRead / totalBytesAll;
+                if (progressValue - oldProgressValue > 0.01)
+                {
+                    oldProgressValue = progressValue;
+                    progress?.Invoke(progressValue);
+                }
+            }
         }
     }
 }

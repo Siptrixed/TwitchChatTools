@@ -121,7 +121,7 @@
     <value>Welcome</value>
   </data>
   <data name="OAuthCaption" xml:space="preserve">
-    <value>Login via Twitch (Click on the browser you want, then click the button)</value>
+    <value>Login via Twitch (Redirect to last focused browser)</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -179,5 +179,38 @@
   </data>
   <data name="Channel" xml:space="preserve">
     <value>Broadcaster</value>
+  </data>
+  <data name="CheckVersion" xml:space="preserve">
+    <value>Checking version...</value>
+  </data>
+  <data name="NewVersionAvailable" xml:space="preserve">
+    <value>New version available!</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current version:</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>New version:</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateLater" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>What's new?</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="Finishing" xml:space="preserve">
+    <value>Last steps...</value>
+  </data>
+  <data name="FetchingChannelData" xml:space="preserve">
+    <value>Getting information about the channel...</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading...</value>
   </data>
 </root>

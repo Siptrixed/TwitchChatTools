@@ -121,7 +121,7 @@
     <value>Добро пожаловать</value>
   </data>
   <data name="OAuthCaption" xml:space="preserve">
-    <value>Вход через Twitch (Кликните по нужному браузеру, затем нажмите кнопку)</value>
+    <value>Вход через Twitch (Перенаправление в последний активный браузер)</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
@@ -179,5 +179,38 @@
   </data>
   <data name="Channel" xml:space="preserve">
     <value>Стример</value>
+  </data>
+  <data name="CheckVersion" xml:space="preserve">
+    <value>Проверка версии...</value>
+  </data>
+  <data name="NewVersionAvailable" xml:space="preserve">
+    <value>Доступна новая версия!</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Текущая версия:</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>Новая версия:</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="UpdateLater" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>Что нового?</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Подключение...</value>
+  </data>
+  <data name="Finishing" xml:space="preserve">
+    <value>Последние шаги...</value>
+  </data>
+  <data name="FetchingChannelData" xml:space="preserve">
+    <value>Получаем информацию о канале...</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Скачивание...</value>
   </data>
 </root>

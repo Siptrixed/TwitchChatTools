@@ -24,10 +24,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="10,10,10,10" VerticalAlignment="Top" Width="100" Grid.Column="0" SelectionChanged="LangSelect_SelectionChanged">
-                        <ComboBoxItem Content="English"/>
-                        <ComboBoxItem Content="Русский"/>
-                    </ComboBox>
+                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="10,10,10,10" VerticalAlignment="Top" Width="100" Grid.Column="0" SelectionChanged="LangSelect_SelectionChanged" SelectedValuePath="Key" DisplayMemberPath="Value"></ComboBox>
                     <Label Content="{Binding Source={x:Static u:Lang.Instance}, Path=[Language]}" HorizontalAlignment="Left" Margin="10,8,110,10" VerticalAlignment="Top" Grid.Column="0"/>
                     <CheckBox x:Name="Settings_MinimizeToTray" Content="{Binding Source={x:Static u:Lang.Instance}, Path=[MinimizeToTray]}" Margin="10,10,10,10" VerticalAlignment="Top" Click="MinimizeToTrayChanged" Grid.Column="1"/>
                 </Grid>

@@ -37,5 +37,9 @@ namespace TwitchChatTools.Utils
                 Path = new System.Windows.PropertyPath($"[{path}]")
             };
         }
+        public static string Get(string path)
+        {
+            return Instance[path];
+        }
     }
 }

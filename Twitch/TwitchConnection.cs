@@ -23,6 +23,7 @@ namespace TwitchChatTools.Twitch
         private TwitchAccount _account;
 
         private string _selectedChannel => MainApp.Instance.Settings.ConnectToUsername ?? _account.Login;
+        private string _selectedChannelId => MainApp.Instance.Settings.ConnectToUserId ?? _account.UserID;
 
         public event EventHandler<OnMessageReceivedArgs> OnMessageReceived
         {
@@ -74,7 +75,7 @@ namespace TwitchChatTools.Twitch
 
         internal async Task<Dictionary<string, CustomReward>> GetCustomRewards()
         {
-            var response = await _api.Helix.ChannelPoints.GetCustomRewardAsync(_selectedChannel);
+            var response = await _api.Helix.ChannelPoints.GetCustomRewardAsync(_selectedChannelId);
             return response.Data.ToDictionary(x => x.Id);
         }
     }

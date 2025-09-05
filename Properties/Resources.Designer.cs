@@ -97,6 +97,15 @@ namespace TwitchChatTools.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Checking version....
+        /// </summary>
+        public static string CheckVersion {
+            get {
+                return ResourceManager.GetString("CheckVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Connect.
         /// </summary>
         public static string Connect {
@@ -106,11 +115,56 @@ namespace TwitchChatTools.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Connecting....
+        /// </summary>
+        public static string Connecting {
+            get {
+                return ResourceManager.GetString("Connecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Connect to another channel.
         /// </summary>
         public static string ConnectToOutherChannelCaption {
             get {
                 return ResourceManager.GetString("ConnectToOutherChannelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Current version:.
+        /// </summary>
+        public static string CurrentVersion {
+            get {
+                return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Downloading....
+        /// </summary>
+        public static string Downloading {
+            get {
+                return ResourceManager.GetString("Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Getting information about the channel....
+        /// </summary>
+        public static string FetchingChannelData {
+            get {
+                return ResourceManager.GetString("FetchingChannelData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Last steps....
+        /// </summary>
+        public static string Finishing {
+            get {
+                return ResourceManager.GetString("Finishing", resourceCulture);
             }
         }
         
@@ -178,7 +232,25 @@ namespace TwitchChatTools.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Login via Twitch (Click on the browser you want, then click the button).
+        ///   Ищет локализованную строку, похожую на New version:.
+        /// </summary>
+        public static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на New version available!.
+        /// </summary>
+        public static string NewVersionAvailable {
+            get {
+                return ResourceManager.GetString("NewVersionAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Login via Twitch (Redirect to last focused browser).
         /// </summary>
         public static string OAuthCaption {
             get {
@@ -241,11 +313,38 @@ namespace TwitchChatTools.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Later.
+        /// </summary>
+        public static string UpdateLater {
+            get {
+                return ResourceManager.GetString("UpdateLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Update.
+        /// </summary>
+        public static string UpdateNow {
+            get {
+                return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Welcome.
         /// </summary>
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на What&apos;s new?.
+        /// </summary>
+        public static string WhatsNew {
+            get {
+                return ResourceManager.GetString("WhatsNew", resourceCulture);
             }
         }
     }

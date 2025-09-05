@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Data;
 using TwitchChatTools.Model.Processing;
 using TwitchChatTools.PageTabs;
 using TwitchChatTools.Twitch;
@@ -58,12 +59,16 @@ namespace TwitchChatTools.Model
 
             return false;
         }
-        public async Task Connect()
+        public async Task Connect(Action<Binding> progress)
         {
             Connection = new TwitchConnection(Account);
-            var rewards = await Connection.GetCustomRewards();
 
+            progress.Invoke(Lang.Bind("FetchingChannelData"));
+
+            var rewards = await Connection.GetCustomRewards();
             EventHandler.Rewards = rewards;
+
+            //updelegate(Lang.Bind("Finishing"));
 
             Connection.OnMessageReceived += MessageHandler.OnMessage;
             Connection.OnRewardRedeemed += EventHandler.OnRewardRedeemed;
