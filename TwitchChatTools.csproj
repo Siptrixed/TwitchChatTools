@@ -11,9 +11,11 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <SignAssembly>False</SignAssembly>
     <ErrorReport>prompt</ErrorReport>
-    <AssemblyVersion>0.0.0.3</AssemblyVersion>
+	<Version>0.0.0.3</Version>
     <FileVersion>0.0.0.3</FileVersion>
+	<AssemblyVersion>0.0.0.3</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
+	<Copyright>© 2025 Siptrixed</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
