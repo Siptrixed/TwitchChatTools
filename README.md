@@ -1,7 +1,7 @@
 # TwitchChatTools
 
 Инструментарий для работы с чатом Twitch во время стрима. <br>
-Наследник проектов [TwitchBot](https://github.com/ScriptedEngineer/TwitchBot) и Незаконченного [TwitchBotV2](https://github.com/ScriptedEngineer/TwitchBot) от Siptrixed (aka ScriptedEngineer)
+Наследник проектов [TwitchBot](https://github.com/ScriptedEngineer/TwitchBot) и Незаконченного [TwitchBotV2](https://github.com/Siptrixed/TwitchBotV2) от Siptrixed (aka ScriptedEngineer)
 
 ## Инструкция
 
