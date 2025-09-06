@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using TwitchChatTools.WebServer;
+using TwitchChatTools.Model.WebServer;
 
-namespace TwitchChatTools.Twitch
+namespace TwitchChatTools.Model.Twitch
 {
     [CustomWebService("Auth")]
     internal static class TwitchOAuth2
@@ -40,6 +40,8 @@ namespace TwitchChatTools.Twitch
         [CustomWebMethod("Ready")]
         public static string PleaseClosePage(HttpListenerRequest request)
         {
+            ArgumentNullException.ThrowIfNull(request);
+
             return "Закройте пожалуйста окно если оно не закрылось автоматически!<script>window.close();</script>";
         }
     }

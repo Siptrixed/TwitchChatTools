@@ -5,8 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using TwitchChatTools.Model;
+using TwitchChatTools.Model.Utils;
 using TwitchChatTools.PageTabs;
-using TwitchChatTools.Utils;
 
 namespace TwitchChatTools
 {
@@ -15,18 +15,18 @@ namespace TwitchChatTools
     /// </summary>
     public partial class MainWindow : Window
     {
-        private TaskbarIcon TaskBarIcon = new TaskbarIcon();
+        private readonly TaskbarIcon TaskBarIcon = new();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            if (MainApp.Instance.Settings.SelectedLanguage == 0)
+            if (MainApp.Instance?.Settings.SelectedLanguage == 0)
             {
                 MainApp.Instance.Settings.SelectedLanguage = Thread.CurrentThread.CurrentCulture.LCID;
             }
             LangSelect.ItemsSource = Settings.Langs;
-            LangSelect.SelectedValue = MainApp.Instance.Settings.SelectedLanguage;
+            LangSelect.SelectedValue = MainApp.Instance?.Settings.SelectedLanguage;
 
             ShowProgress(Lang.Bind("InitCaption"), withLangSelect: true);
 
@@ -75,7 +75,7 @@ namespace TwitchChatTools
         }
         private void OnMinimizeClick(object sender, RoutedEventArgs e)
         {
-            if (MainApp.Instance.Settings.MinimizeToTray)
+            if (MainApp.Instance?.Settings.MinimizeToTray ?? false)
             {
                 Hide();
             }
@@ -83,6 +83,8 @@ namespace TwitchChatTools
         }
         private void OnLoginClick(object? sender, RoutedEventArgs? e)
         {
+            if (MainApp.Instance == null) return;
+
             ShowProgress(e == null ? Lang.Bind("CheckTokenCaption") : Lang.Bind("OAuthProgressCaption"), withLangSelect: true);
             _ = Task.Run(async () =>
             {
@@ -112,6 +114,8 @@ namespace TwitchChatTools
         }
         private void OnChannelSelectClick(object? sender, RoutedEventArgs? e)
         {
+            if (MainApp.Instance == null) return;
+
             MainApp.Instance.Settings.ConnectToUsername = ChannelToConnectUser.Text.Trim().ToLower();
             ShowProgress(Lang.Bind("CheckChannelCaption"), withLangSelect: true);
             _ = Task.Run(async () =>
@@ -211,6 +215,8 @@ namespace TwitchChatTools
 
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (MainApp.Instance == null) return;
+
             if (LangSelect.SelectedIndex == -1) return;
             MainApp.Instance.Settings.SelectedLanguage = (int)LangSelect.SelectedValue;
             MainApp.Instance.Settings.ApplyLanguage();

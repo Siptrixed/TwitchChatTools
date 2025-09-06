@@ -1,4 +1,4 @@
-﻿namespace TwitchChatTools.Twitch
+﻿namespace TwitchChatTools.Model.Twitch
 {
     internal static class TwitchInfo
     {

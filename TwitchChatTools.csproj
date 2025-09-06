@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.5" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
     <PackageReference Include="MessagePack" Version="3.1.4" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.8" />
     <PackageReference Include="TwitchLib" Version="3.5.3" />

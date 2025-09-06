@@ -1,6 +1,6 @@
 ﻿using System.Net.WebSockets;
 
-namespace TwitchChatTools.WebServer
+namespace TwitchChatTools.Model.WebServer
 {
     internal class CustomWebSocket
     {

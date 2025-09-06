@@ -1,4 +1,4 @@
-﻿namespace TwitchChatTools.WinApi
+﻿namespace TwitchChatTools.Model.WinApi
 {
     [Flags]
     public enum KeyModifier

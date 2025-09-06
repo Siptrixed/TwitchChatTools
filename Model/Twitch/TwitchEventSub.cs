@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Diagnostics;
-using TwitchChatTools.Model;
 using TwitchLib.Api.Core.Enums;
+using TwitchLib.Api.Helix;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 using TwitchLib.EventSub.Websockets;
 
-namespace TwitchChatTools.Twitch
+namespace TwitchChatTools.Model.Twitch
 {
     internal class TwitchEventSub
     {
@@ -21,6 +21,7 @@ namespace TwitchChatTools.Twitch
             _account = account;
 
             _eventsub.WebsocketConnected += OnWebsocketConnected;
+            _eventsub.WebsocketDisconnected += OnWebsocketDisconnected;
             _eventsub.ErrorOccurred += OnErrorOccurred;
             _eventsub.ChannelPointsCustomRewardRedemptionAdd += OnChannelPointsCustomRewardRedemptionAdd;
             if (!_eventsub_connected)
@@ -30,7 +31,7 @@ namespace TwitchChatTools.Twitch
             }
         }
 
-        private async Task OnWebsocketDisconnected(object sender, EventArgs e)
+        private async Task OnWebsocketDisconnected(object? sender, EventArgs e)
         {
             while (!await _eventsub.ReconnectAsync())
             {
@@ -41,7 +42,7 @@ namespace TwitchChatTools.Twitch
         {
             if (!e.IsRequestedReconnect)
             {
-                var condition = new Dictionary<string, string> { { "broadcaster_user_id", MainApp.Instance.Settings.ConnectToUserId ?? _account.UserID }, { "moderator_user_id", _account.UserID } };
+                var condition = new Dictionary<string, string> { { "broadcaster_user_id", MainApp.Instance?.Settings.ConnectToUserId ?? _account.UserID }, { "moderator_user_id", _account.UserID } };
 
                 List<(string topic, string version)> topics = [
                     ("channel.channel_points_custom_reward_redemption.add", "1"),

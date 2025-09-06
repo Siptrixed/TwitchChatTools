@@ -1,14 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Data;
-using TwitchChatTools.Model.Processing;
-using TwitchChatTools.Twitch;
-using TwitchChatTools.Utils;
+using TwitchChatTools.Model.Events;
+using TwitchChatTools.Model.Utils;
+using TwitchChatTools.Model.Twitch;
 
 namespace TwitchChatTools.Model
 {
     internal class MainApp
     {
-        public static MainApp Instance { get; private set; }
+        public static MainApp? Instance { get; private set; }
 
         internal AppSettings Settings { get; }
         internal TwitchAccount Account { get; set; }

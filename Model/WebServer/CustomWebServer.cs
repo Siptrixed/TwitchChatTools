@@ -4,13 +4,13 @@ using System.Net.WebSockets;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using TwitchChatTools.Utils;
+using TwitchChatTools.Model.Utils;
 
-namespace TwitchChatTools.WebServer
+namespace TwitchChatTools.Model.WebServer
 {
     internal class CustomWebServer
     {
-        public static CustomWebServer Instance { get; private set; }
+        public static CustomWebServer? Instance { get; private set; }
 
         private readonly HttpListener _listener = new HttpListener();
         private static Dictionary<string, MethodInfo> _services = new Dictionary<string, MethodInfo>();
@@ -36,7 +36,7 @@ namespace TwitchChatTools.WebServer
                 _listener.Prefixes.Add(s);
             }
         }
-        public static async Task InitializeAndRunInstance()
+        public static void InitializeAndRunInstance()
         {
             if (Instance != null) throw new InvalidOperationException("Instance of class TwitchChatToolsApp alreay exists");
 

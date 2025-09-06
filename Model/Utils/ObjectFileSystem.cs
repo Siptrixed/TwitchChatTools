@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace TwitchChatTools.Utils
+namespace TwitchChatTools.Model.Utils
 {
     internal static class ObjectFileSystem
     {
@@ -39,7 +39,7 @@ namespace TwitchChatTools.Utils
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -96,12 +96,12 @@ namespace TwitchChatTools.Utils
             var ext = protect ? "bin" : "json";
 
             var saveFile = $"{AppDataDirectory}\\{name}.{ext}";
-            bool success = TryReadObjFromFile<T>(saveFile, out T? Obj, protect);
+            bool success = TryReadObjFromFile(saveFile, out T? Obj, protect);
             if (success) return Obj!;
             else if(File.Exists(saveFile)) File.Delete(saveFile);
 
             var backupFile = $"{AppDataDirectory}\\{name}.{ext}.bak";
-            success = TryReadObjFromFile<T>(backupFile, out T? Obj2, protect);
+            success = TryReadObjFromFile(backupFile, out T? Obj2, protect);
             if (success) return Obj2!;
 
             return new T();

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace TwitchChatTools.Utils
+namespace TwitchChatTools.Model.Utils
 {
     public static class MyAppExt
     {
@@ -37,10 +38,9 @@ namespace TwitchChatTools.Utils
                 min = p;
             }
             if (max > min)
-                using (var client = new System.Net.WebClient())
+                using (var client = new HttpClient())
                 {
-                    client.Encoding = Encoding.UTF8;
-                    string lol = client.DownloadString($"https://www.random.org/integers/?num={count}&min={min}&max={max}&col=1&base=10&format=plain&rnd=new");
+                    string lol = client.GetStringAsync($"https://www.random.org/integers/?num={count}&min={min}&max={max}&col=1&base=10&format=plain&rnd=new").GetAwaiter().GetResult();
                     foreach (string num in lol.Split('\n'))
                     {
                         if (string.IsNullOrEmpty(num)) continue;

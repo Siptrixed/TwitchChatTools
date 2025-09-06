@@ -1,16 +1,15 @@
 ﻿using System.Windows.Input;
-using TwitchChatTools.Model;
-using TwitchChatTools.WinApi;
+using TwitchChatTools.Model.WinApi;
 
-namespace TwitchChatTools.Utils
+namespace TwitchChatTools.Model.Utils
 {
     internal static class HotKeyManager
     {
-        private static AppSettings Setts => MainApp.Instance.Settings;
+        private static AppSettings Setts => MainApp.Instance?.Settings ?? new AppSettings();
 
         private static WinHotkey? StopSound;
         public static void ClearStopSound() => UnsetHotkey(Setts.StopSoundHotkey, StopSound);
-        public static void SetStopSound(Key key, KeyModifier mod) => SetHotkey(key, mod, StopSoundPressed, Setts.StopSoundHotkey, StopSound);
+        public static void SetStopSound(Key key, KeyModifier mod) => StopSound = SetHotkey(key, mod, StopSoundPressed, Setts.StopSoundHotkey, StopSound);
         public static void StopSoundPressed(WinHotkey key)
         {
 

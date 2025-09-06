@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
-using TwitchChatTools.Model;
-using TwitchChatTools.Utils;
+using TwitchChatTools.Model.Utils;
 using TwitchLib.Api;
 using TwitchLib.Api.Helix.Models.ChannelPoints;
 using TwitchLib.Client;
@@ -11,7 +10,7 @@ using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 
-namespace TwitchChatTools.Twitch
+namespace TwitchChatTools.Model.Twitch
 {
     internal class TwitchConnection
     {
@@ -20,8 +19,8 @@ namespace TwitchChatTools.Twitch
         private TwitchAPI _api;
         private TwitchAccount _account;
 
-        private string _selectedChannel => MainApp.Instance.Settings.ConnectToUsername ?? _account.Login;
-        private string _selectedChannelId => MainApp.Instance.Settings.ConnectToUserId ?? _account.UserID;
+        private string _selectedChannel => MainApp.Instance?.Settings.ConnectToUsername ?? _account.Login;
+        private string _selectedChannelId => MainApp.Instance?.Settings.ConnectToUserId ?? _account.UserID;
 
         public event EventHandler<OnMessageReceivedArgs> OnMessageReceived
         {
@@ -58,9 +57,12 @@ namespace TwitchChatTools.Twitch
 
         private void OnConnectionError(object? sender, OnConnectionErrorArgs e)
         {
-            MainApp.Instance.Settings.ConnectToUsername = null;
-            MainApp.Instance.Settings.ConnectToUserId = null;
-            MainApp.Instance.Account = new TwitchAccount();
+            if (MainApp.Instance != null)
+            {
+                MainApp.Instance.Settings.ConnectToUsername = null;
+                MainApp.Instance.Settings.ConnectToUserId = null;
+                MainApp.Instance.Account = new TwitchAccount();
+            }
 
             Process.Start(ObjectFileSystem.AppFile);
             Application.Current.Shutdown();

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TwitchChatTools"
-        xmlns:u="clr-namespace:TwitchChatTools.Utils"
+        xmlns:u="clr-namespace:TwitchChatTools.Model.Utils"
         mc:Ignorable="d"
         AllowsTransparency="True"
         WindowStyle="None"

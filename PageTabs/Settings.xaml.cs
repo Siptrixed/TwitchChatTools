@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TwitchChatTools.Model;
-using TwitchChatTools.Twitch;
-using TwitchChatTools.Utils;
-using TwitchChatTools.WinApi;
+using TwitchChatTools.Model.Utils;
+using TwitchChatTools.Model.WinApi;
+using TwitchChatTools.Model.Twitch;
 
 namespace TwitchChatTools.PageTabs
 {
@@ -77,16 +77,19 @@ namespace TwitchChatTools.PageTabs
 
         public void UpdateSettingValues()
         {
-            StopSoundHotkeySelector.Text = MainApp.Instance.Settings.StopSoundHotkey.ToString();
-            Settings_MinimizeToTray.IsChecked = MainApp.Instance.Settings.MinimizeToTray;
-            LangSelect.SelectedValue = MainApp.Instance.Settings.SelectedLanguage;
-            TwitchDataLabel.Text = $"{Lang.Instance["Account"]}: {MainApp.Instance.Account.Login} ({MainApp.Instance.Account.UserID})\r\n" +
-                $"{Lang.Instance["Channel"]}: {MainApp.Instance.Settings.ConnectToUsername} ({MainApp.Instance.Settings.ConnectToUserId})";
+            StopSoundHotkeySelector.Text = MainApp.Instance?.Settings.StopSoundHotkey.ToString();
+            Settings_MinimizeToTray.IsChecked = MainApp.Instance?.Settings.MinimizeToTray;
+            LangSelect.SelectedValue = MainApp.Instance?.Settings.SelectedLanguage;
+            TwitchDataLabel.Text = $"{Lang.Instance["Account"]}: {MainApp.Instance?.Account.Login} ({MainApp.Instance?.Account.UserID})\r\n" +
+                $"{Lang.Instance["Channel"]}: {MainApp.Instance?.Settings.ConnectToUsername} ({MainApp.Instance?.Settings.ConnectToUserId})";
         }
 
         public void ExitFromTwitchAndClose(object sender, RoutedEventArgs e)
         {
-            MainApp.Instance.Account = new TwitchAccount();
+            if (MainApp.Instance != null)
+            {
+                MainApp.Instance.Account = new TwitchAccount();
+            }
 
             Process.Start(ObjectFileSystem.AppFile);
             Application.Current.Shutdown();
@@ -94,15 +97,21 @@ namespace TwitchChatTools.PageTabs
 
         private void ChangeConnectedChannel(object sender, RoutedEventArgs e)
         {
-            MainApp.Instance.Settings.ConnectToUsername = null;
-            MainApp.Instance.Settings.ConnectToUserId = null;
+            if (MainApp.Instance != null)
+            {
+                MainApp.Instance.Settings.ConnectToUsername = null;
+                MainApp.Instance.Settings.ConnectToUserId = null;
+            }
 
             Process.Start(ObjectFileSystem.AppFile);
             Application.Current.Shutdown();
         }
         public void MinimizeToTrayChanged(object sender, RoutedEventArgs e)
         {
-            MainApp.Instance.Settings.MinimizeToTray = Settings_MinimizeToTray.IsChecked!.Value;
+            if (MainApp.Instance != null)
+            {
+                MainApp.Instance.Settings.MinimizeToTray = Settings_MinimizeToTray.IsChecked!.Value;
+            }
         }
         public void StopSoundHotkeySettingKeyDown(object sender, KeyEventArgs e)
         {
@@ -115,20 +124,24 @@ namespace TwitchChatTools.PageTabs
             if (selected != null && selected.HasValue)
             {
                 HotKeyManager.SetStopSound(selected.Value.key, selected.Value.mod);
-                StopSoundHotkeySelector.Text = MainApp.Instance.Settings.StopSoundHotkey.ToString();
+                StopSoundHotkeySelector.Text = MainApp.Instance?.Settings.StopSoundHotkey?.ToString() ?? string.Empty;
             }
         }
         public void StopSoundClearHotkey(object sender, RoutedEventArgs e)
         {
             HotKeyManager.ClearStopSound();
-            StopSoundHotkeySelector.Text = MainApp.Instance.Settings.StopSoundHotkey.ToString();
+            StopSoundHotkeySelector.Text = MainApp.Instance?.Settings.StopSoundHotkey?.ToString() ?? string.Empty;
         }
 
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (MainApp.Instance == null) return;
+
             if (LangSelect.SelectedIndex == -1) return;
+
             MainApp.Instance.Settings.SelectedLanguage = (int)LangSelect.SelectedValue;
             MainApp.Instance.Settings.ApplyLanguage();
+
             UpdateSettingValues();
         }
     }

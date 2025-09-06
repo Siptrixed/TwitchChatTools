@@ -2,16 +2,16 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-namespace TwitchChatTools.WinApi
+namespace TwitchChatTools.Model.WinApi
 {
     class WinApi
     {
 #pragma warning disable IDE1006 // Стили именования
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern nint FindWindow(string lpClassName, string lpWindowName);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr GetWindow(IntPtr HWnd, GetWindow_Cmd cmd);
+        public static extern nint GetWindow(nint HWnd, GetWindow_Cmd cmd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(int hwnd, int wMsg, int wParam, int lParam);
@@ -27,25 +27,25 @@ namespace TwitchChatTools.WinApi
         }
 
         [DllImport("user32.dll")]
-        private static extern int GetAsyncKeyState(Int32 i);
+        private static extern int GetAsyncKeyState(int i);
         public static bool GetKeyState(int i)
         {
             return GetAsyncKeyState(i) != 0;
         }
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowThreadProcessId([In] IntPtr hWnd, [Out, Optional] IntPtr lpdwProcessId);
+        private static extern int GetWindowThreadProcessId([In] nint hWnd, [Out, Optional] nint lpdwProcessId);
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr GetForegroundWindow();
+        private static extern nint GetForegroundWindow();
         [DllImport("user32.dll", SetLastError = true)]
         private static extern ushort GetKeyboardLayout([In] int idThread);
         public static ushort GetKeyboardLayout()
         {
-            return GetKeyboardLayout(GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero));
+            return GetKeyboardLayout(GetWindowThreadProcessId(GetForegroundWindow(), nint.Zero));
         }
 
         [DllImport("user32.dll")]
-        public static extern int PeekMessage(out NativeMessage lpMsg, IntPtr window, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg);
+        public static extern int PeekMessage(out NativeMessage lpMsg, nint window, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg);
 
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -67,13 +67,13 @@ namespace TwitchChatTools.WinApi
         }
 
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, UInt32 fsModifiers, UInt32 vlc);
+        private static extern bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vlc);
 
         [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        private static extern bool UnregisterHotKey(nint hWnd, int id);
 
         [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
-        public static extern int BitBlt(IntPtr hDC, int x, int y, int nWidth, int nHeight, IntPtr hSrcDC, int xSrc, int ySrc, int dwRop);
+        public static extern int BitBlt(nint hDC, int x, int y, int nWidth, int nHeight, nint hSrcDC, int xSrc, int ySrc, int dwRop);
 
         public static void SetEnableScreen(bool enable)
         {
@@ -104,28 +104,35 @@ namespace TwitchChatTools.WinApi
             }
 
             private static LowLevelMouseProc _proc = HookCallback;
-            private static IntPtr _hookID = IntPtr.Zero;
+            private static nint _hookID = nint.Zero;
 
-            private static IntPtr SetHook(LowLevelMouseProc proc)
+            private static nint SetHook(LowLevelMouseProc proc)
             {
                 using (Process curProcess = Process.GetCurrentProcess())
-                using (ProcessModule curModule = curProcess.MainModule)
                 {
-                    return SetWindowsHookEx(WH_MOUSE_LL, proc,
-                      GetModuleHandle(curModule.ModuleName), 0);
+                    if (curProcess.MainModule == null) throw new InvalidOperationException("Main Module not loaded");
+                    using (ProcessModule curModule = curProcess.MainModule)
+                    {
+                        return SetWindowsHookEx(WH_MOUSE_LL, proc,
+                          GetModuleHandle(curModule.ModuleName), 0);
+                    }
                 }
             }
 
-            private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+            private delegate nint LowLevelMouseProc(int nCode, nint wParam, nint lParam);
 
-            private static IntPtr HookCallback(
-              int nCode, IntPtr wParam, IntPtr lParam)
+            private static nint HookCallback(
+              int nCode, nint wParam, nint lParam)
             {
                 MouseMessages MSGTP = (MouseMessages)wParam;
                 if (nCode >= 0 && (MSGTP == MouseMessages.WM_MOUSEWHEEL || MSGTP == MouseMessages.WM_MOUSEMOVE))
                 {
-                    MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                    MouseAction(null, new MouseEventArgs(NativeMethods.GET_WHEEL_DELTA_WPARAM(hookStruct.mouseData), hookStruct.pt.x, hookStruct.pt.y));
+                    MSLLHOOKSTRUCT? hookStructq = (MSLLHOOKSTRUCT?)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                    if (hookStructq != null && hookStructq.HasValue)
+                    {
+                        MSLLHOOKSTRUCT hookStruct = hookStructq.Value;
+                        MouseAction(null, new MouseEventArgs(NativeMethods.GET_WHEEL_DELTA_WPARAM(hookStruct.mouseData), hookStruct.pt.x, hookStruct.pt.y));
+                    }
                 }
                 return CallNextHookEx(_hookID, nCode, wParam, lParam);
             }
@@ -156,29 +163,29 @@ namespace TwitchChatTools.WinApi
                 public uint mouseData;
                 public uint flags;
                 public uint time;
-                public IntPtr dwExtraInfo;
+                public nint dwExtraInfo;
             }
 
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            private static extern IntPtr SetWindowsHookEx(int idHook,
-              LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+            private static extern nint SetWindowsHookEx(int idHook,
+              LowLevelMouseProc lpfn, nint hMod, uint dwThreadId);
 
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+            private static extern bool UnhookWindowsHookEx(nint hhk);
 
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-              IntPtr wParam, IntPtr lParam);
+            private static extern nint CallNextHookEx(nint hhk, int nCode,
+              nint wParam, nint lParam);
 
-            [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            private static extern IntPtr GetModuleHandle(string lpModuleName);
+            [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            private static extern nint GetModuleHandle(string lpModuleName);
 
             internal static class NativeMethods
             {
-                internal static ushort HIWORD(IntPtr dwValue)
+                internal static ushort HIWORD(nint dwValue)
                 {
-                    return (ushort)((((long)dwValue) >> 0x10) & 0xffff);
+                    return (ushort)((long)dwValue >> 0x10 & 0xffff);
                 }
 
                 internal static ushort HIWORD(uint dwValue)
@@ -186,7 +193,7 @@ namespace TwitchChatTools.WinApi
                     return (ushort)(dwValue >> 0x10);
                 }
 
-                internal static int GET_WHEEL_DELTA_WPARAM(IntPtr wParam)
+                internal static int GET_WHEEL_DELTA_WPARAM(nint wParam)
                 {
                     return (short)HIWORD(wParam);
                 }
@@ -466,12 +473,14 @@ namespace TwitchChatTools.WinApi
             {
                 return a.X != b.X || a.Y != b.Y;
             }
-            public override bool Equals(object b)
+            public override readonly bool Equals(object? b)
             {
+                if(b == null) return false;
+
                 MousePoint bx = (MousePoint)b;
                 return X == bx.X && Y == bx.Y;
             }
-            public override int GetHashCode()
+            public override readonly int GetHashCode()
             {
                 return X * Y;
             }
@@ -480,13 +489,13 @@ namespace TwitchChatTools.WinApi
         [StructLayout(LayoutKind.Sequential)]
         public struct NativeMessage
         {
-            public IntPtr handle;
+            public nint handle;
             public uint msg;
-            public IntPtr wParam;
-            public IntPtr lParam;
+            public nint wParam;
+            public nint lParam;
             public uint time;
             public Point p;
-            public override string ToString()
+            public override readonly string ToString()
             {
                 return handle + ", " + msg + ", " + wParam + ", " + lParam + ", " + time + ", " + p;
             }

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using TwitchChatTools.Model;
-using TwitchChatTools.WebServer;
+using TwitchChatTools.Model.WebServer;
 
 namespace TwitchChatTools
 {
@@ -13,9 +13,9 @@ namespace TwitchChatTools
         {
             MainApp.InitializeInstance();
 
-            MainApp.Instance.Settings.ApplyLanguage();
+            MainApp.Instance?.Settings.ApplyLanguage();
             
-            _ = CustomWebServer.InitializeAndRunInstance();
+            CustomWebServer.InitializeAndRunInstance();
         }
     }
 

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-namespace TwitchChatTools.Utils
+namespace TwitchChatTools.Model.Utils
 {
     internal static class VersionControl
     {

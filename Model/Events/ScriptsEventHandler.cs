@@ -1,7 +1,7 @@
 ﻿using TwitchLib.Api.Helix.Models.ChannelPoints;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 
-namespace TwitchChatTools.Model.Processing
+namespace TwitchChatTools.Model.Events
 {
     internal class ScriptsEventHandler
     {

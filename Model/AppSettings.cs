@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using TwitchChatTools.Utils;
-using TwitchChatTools.WinApi;
+using TwitchChatTools.Model.Utils;
+using TwitchChatTools.Model.WinApi;
 
 namespace TwitchChatTools.Model
 {

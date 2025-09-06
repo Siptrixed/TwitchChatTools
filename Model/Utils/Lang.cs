@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Resources;
 using System.Windows.Data;
 
-namespace TwitchChatTools.Utils
+namespace TwitchChatTools.Model.Utils
 {
     public class Lang : INotifyPropertyChanged
     {

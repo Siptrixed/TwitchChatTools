@@ -1,6 +1,6 @@
 ﻿using TwitchLib.Api;
 
-namespace TwitchChatTools.Twitch
+namespace TwitchChatTools.Model.Twitch
 {
     [MessagePack.MessagePackObject(keyAsPropertyName: true)]
     public class TwitchAccount

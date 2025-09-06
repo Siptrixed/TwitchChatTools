@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Windows.Input;
 
-namespace TwitchChatTools.WinApi
+namespace TwitchChatTools.Model.WinApi
 {
     public class WinHotkeyData
     {

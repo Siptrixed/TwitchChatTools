@@ -1,4 +1,4 @@
-﻿namespace TwitchChatTools.WebServer
+﻿namespace TwitchChatTools.Model.WebServer
 {
     internal abstract class CustomWebAttrubute(string? url = null) : Attribute
     {
