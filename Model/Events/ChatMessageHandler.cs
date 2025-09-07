@@ -32,7 +32,7 @@ namespace TwitchChatTools.Model.Events
                 case "help":
                     var help = new StringBuilder();
 
-                    help.AppendLine(">help - Вывести список доступных мне команд;\r\n");
+                    help.AppendLine(">help - Вывести список доступных команд;\r\n");
 
                     if (MainApp.Instance != null)
                     {

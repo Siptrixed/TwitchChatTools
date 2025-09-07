@@ -102,6 +102,10 @@ namespace TwitchChatTools.Model.Twitch
         {
             _client.SendMessage(_selectedChannel, text);
         }
+        internal void SendWishper(string reciver,string text)
+        {
+            _client.SendWhisper(reciver, text);
+        }
 
         internal async Task<CustomReward[]> GetCustomRewards()
         {
