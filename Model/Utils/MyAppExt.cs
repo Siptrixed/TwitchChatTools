@@ -12,7 +12,7 @@ namespace TwitchChatTools.Model.Utils
     {
         public static byte[] HWID = Guid.Parse(Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\IDConfigDB\Hardware Profiles\0001", "HwProfileGuid", string.Empty)?.ToString() ?? string.Empty).ToByteArray();
         public static DispatcherOperation? InvokeUI(Action act) => Application.Current?.Dispatcher?.BeginInvoke(DispatcherPriority.Background, act);
-        public static void RunCMD(string scripd)
+        public static async Task RunCMD(string scripd)
         {
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -25,7 +25,7 @@ namespace TwitchChatTools.Model.Utils
             cmd.StandardInput.WriteLine(scripd);
             cmd.StandardInput.Flush();
             cmd.StandardInput.Close();
-            cmd.WaitForExit();
+            await cmd.WaitForExitAsync();
         }
         public static int TrueRandom(int min, int max) => TrueRandom(min, max, 1)[0];
         public static int[] TrueRandom(int min, int max, int count = 1)

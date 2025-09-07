@@ -17,7 +17,7 @@ namespace TwitchChatTools.Model.Events
             var parsed = ParsedCommand.TryParse(e.ChatMessage);
             if (parsed != null)
             {
-                ProcessCommand(parsed);
+                ProcessCommand(parsed, e.ChatMessage);
             }
             else
             {
@@ -25,8 +25,10 @@ namespace TwitchChatTools.Model.Events
             }
         }
 
-        private void ProcessCommand(ParsedCommand command)
+        private void ProcessCommand(ParsedCommand command, ChatMessage message)
         {
+            //message.UserType
+
             switch (command.Command)
             {
                 case "help":
