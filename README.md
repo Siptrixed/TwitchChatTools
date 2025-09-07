@@ -34,7 +34,7 @@
 ## Установка
 
 1. Перейдите в [GitHub Releases](https://github.com/Siptrixed/TwitchChatTools/releases)
-1. Cкачайте последнюю версию (TwitchChatTools-win.zip)
+1. Cкачайте последнюю версию (TwitchChatTools-win64-rtr.zip)
 2. Распакуйте в удобное место
 1. Запустите TwitchChatTools.exe
 

@@ -19,7 +19,6 @@ namespace TwitchChatTools.Model.Utils
         public static VersionInfo? NewestVersion = null;
         public static async Task<VersionInfo?> CheckVersionAsync(bool silentUpdate = false)
         {
-#if DEBUG
             try
             {
                 using (var client = new HttpClient())
@@ -59,7 +58,6 @@ namespace TwitchChatTools.Model.Utils
             {
                 return null;
             }
-#endif
             return null;
         }
 
