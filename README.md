@@ -4,6 +4,9 @@
 Наследник проектов [TwitchBot](https://github.com/ScriptedEngineer/TwitchBot) и Незаконченного [TwitchBotV2](https://github.com/Siptrixed/TwitchBotV2) от Siptrixed (aka ScriptedEngineer)
 
 ## Дорожная карта
+- Pre-Alpha 0.0.0.1 - Базовые элементы интерфейса
+- Pre-Alpha 0.0.0.2 - Тестирование подключения к Twitch
+- Pre-Alpha 0.0.0.3 - Автоматические обновления
 - Pre-Alpha 0.0.0.4 - Система пошаговых "скриптов" и обработка событий
 - Pre-Alpha 0.0.0.5 - Система прав зрителей
 - Pre-Alpha 0.0.0.6 - Система визуального программирования пошаговых "скриптов"
