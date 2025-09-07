@@ -2,7 +2,7 @@
 using TwitchChatTools.Model.Utils;
 using TwitchChatTools.Model.WinApi;
 
-namespace TwitchChatTools.Model
+namespace TwitchChatTools.Model.Objects
 {
     public class AppSettings
     {
@@ -14,13 +14,7 @@ namespace TwitchChatTools.Model
         public string? ConnectToUserId { get; set; } = null;
         public int SelectedLanguage { get; set; } = 0;
 
-        //public Dictionary<string, MyRewardInfo> CustomRewards { get; set; } = new Dictionary<string, MyRewardInfo>();
-
-        // public OBSConnectionInfo? OBSWebSockCI { get; set; }
-        // public TrueTTSVoices DefaultVoice { get; set; } = TrueTTSVoices.alena;
-        //  public byte DefaultVolume { get; set; } = 50;
-        //public string YandexToken { get; set; }
-        // public int DefaultRate { get; set; } = 0; 
+        public CustomScriptEventSettings Events { get; set; } = new CustomScriptEventSettings();
 
         public void ApplyLanguage()
         {

@@ -15,21 +15,33 @@ namespace TwitchChatTools.Model.Twitch
         private TwitchAccount _account;
 
         public event EventHandler<ChannelPointsCustomRewardRedemptionArgs>? OnRewardRedeemed;
+        public event EventHandler<ChannelFollowArgs>? OnNewFollower;
+        public event EventHandler<ChannelSubscribeArgs>? OnNewSubscriber;
 
         public TwitchEventSub(TwitchAccount account)
         {
             _account = account;
 
+            _eventsub.ChannelPointsCustomRewardRedemptionAdd += OnRewardRedemptionAdd;
+            _eventsub.ChannelFollow += OnChannelFollow;
+            _eventsub.ChannelSubscribe += OnChannelSubscribe;
+
             _eventsub.WebsocketConnected += OnWebsocketConnected;
             _eventsub.WebsocketDisconnected += OnWebsocketDisconnected;
             _eventsub.ErrorOccurred += OnErrorOccurred;
-            _eventsub.ChannelPointsCustomRewardRedemptionAdd += OnChannelPointsCustomRewardRedemptionAdd;
             if (!_eventsub_connected)
             {
                 _eventsub.ConnectAsync().GetAwaiter().GetResult();
                 _eventsub_connected = true;
             }
         }
+
+        private Task OnChannelSubscribe(object? sender, ChannelSubscribeArgs e) => RedirectEvent(OnNewSubscriber, sender, e);
+
+        private Task OnRewardRedemptionAdd(object? sender, ChannelPointsCustomRewardRedemptionArgs e) => RedirectEvent(OnRewardRedeemed, sender, e);
+
+        private Task OnChannelFollow(object? sender, ChannelFollowArgs e) => RedirectEvent(OnNewFollower, sender, e);
+
 
         private async Task OnWebsocketDisconnected(object? sender, EventArgs e)
         {
@@ -46,6 +58,8 @@ namespace TwitchChatTools.Model.Twitch
 
                 List<(string topic, string version)> topics = [
                     ("channel.channel_points_custom_reward_redemption.add", "1"),
+                    ("channel.subscribe", "1"),
+                    ("channel.follow", "2"),
                 ];
 
                 foreach (var topic in topics)
@@ -61,12 +75,12 @@ namespace TwitchChatTools.Model.Twitch
 
             return Task.CompletedTask;
         }
-
-        private Task OnChannelPointsCustomRewardRedemptionAdd(object? sender, ChannelPointsCustomRewardRedemptionArgs e)
+        private Task RedirectEvent<T>(EventHandler<T>? handler, object? sender, T e)
         {
-            OnRewardRedeemed?.Invoke(sender, e);
+            handler?.Invoke(sender, e);
 
             return Task.CompletedTask;
         }
+
     }
 }

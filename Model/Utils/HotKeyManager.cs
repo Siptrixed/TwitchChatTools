@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using TwitchChatTools.Model.Objects;
 using TwitchChatTools.Model.WinApi;
 
 namespace TwitchChatTools.Model.Utils

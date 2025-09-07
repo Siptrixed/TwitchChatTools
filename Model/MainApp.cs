@@ -1,8 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Data;
 using TwitchChatTools.Model.Events;
-using TwitchChatTools.Model.Utils;
+using TwitchChatTools.Model.Objects;
 using TwitchChatTools.Model.Twitch;
+using TwitchChatTools.Model.UserScripts;
+using TwitchChatTools.Model.Utils;
 
 namespace TwitchChatTools.Model
 {
@@ -13,14 +15,20 @@ namespace TwitchChatTools.Model
         internal AppSettings Settings { get; }
         internal TwitchAccount Account { get; set; }
         internal TwitchConnection? Connection { get; set; }
-        internal ScriptsEventHandler EventHandler { get; set; } = new ScriptsEventHandler();
-        internal ChatHandler MessageHandler { get; set; } = new ChatHandler();
+        internal ScriptsEventsHandler EventHandler { get; set; } = new ScriptsEventsHandler();
+        internal ChatMessageHandler MessageHandler { get; set; } = new ChatMessageHandler();
+        internal Dictionary<string, RewardInfo> Rewards { get; set; } = new Dictionary<string, RewardInfo>();
+        internal Dictionary<string, UserScript> Scripts { get; set; } = new Dictionary<string, UserScript>();
+        internal Dictionary<string, CustomCommand> Commands { get; set; } = new Dictionary<string, CustomCommand>();
+
         private MainApp()
         {
             if (Instance != null) throw new InvalidOperationException("Instance of class TwitchChatToolsApp alreay exists");
 
             Settings = ObjectFileSystem.LoadObject<AppSettings>(false, nameof(Settings));
             Account = ObjectFileSystem.LoadObject<TwitchAccount>(true);
+            Scripts = ObjectFileSystem.LoadObject<Dictionary<string, UserScript>>(true, nameof(Scripts));
+            Commands = ObjectFileSystem.LoadObject<Dictionary<string, CustomCommand>>(true, nameof(Commands));
 
             Application.Current.Exit += OnAppExit;
         }
@@ -63,19 +71,41 @@ namespace TwitchChatTools.Model
 
             progress.Invoke(Lang.Bind("FetchingChannelData"));
 
-            var rewards = await Connection.GetCustomRewards();
-            EventHandler.Rewards = rewards;
-
-            //updelegate(Lang.Bind("Finishing"));
+            await GetRewards();
 
             Connection.OnMessageReceived += MessageHandler.OnMessage;
             Connection.OnRewardRedeemed += EventHandler.OnRewardRedeemed;
+            Connection.OnNewFollower += EventHandler.OnNewFollower;
+            Connection.OnNewSubscriber += EventHandler.OnNewSubscriber;
+            MessageHandler.OnCustomCommand += EventHandler.OnCustomCommand;
+        }
+
+        public async Task GetRewards()
+        {
+            if (Connection == null) return;
+
+            var rewards = await Connection.GetCustomRewards();
+            var rewardsFromFile = ObjectFileSystem.LoadObject<Dictionary<string, RewardInfo>>(false, nameof(Rewards));
+            Rewards = rewards.Select(x =>
+            {
+                if (rewardsFromFile.ContainsKey(x.Id))
+                {
+                    return rewardsFromFile[x.Id].UpdateValues(x);
+                }
+                else
+                {
+                    return new RewardInfo(x);
+                }
+            }).ToDictionary(x => x.Id);
         }
 
         public void SaveSettings()
         {
-            ObjectFileSystem.SaveObject(Settings, false, nameof(Settings));
             ObjectFileSystem.SaveObject(Account, true);
+            ObjectFileSystem.SaveObject(Settings, false, nameof(Settings));
+            ObjectFileSystem.SaveObject(Rewards, false, nameof(Rewards));
+            ObjectFileSystem.SaveObject(Scripts, false, nameof(Scripts));
+            ObjectFileSystem.SaveObject(Commands, false, nameof(Commands));
         }
 
         private void OnAppExit(object sender, ExitEventArgs e)

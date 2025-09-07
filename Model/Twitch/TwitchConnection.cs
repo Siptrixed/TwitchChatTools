@@ -27,10 +27,40 @@ namespace TwitchChatTools.Model.Twitch
             add { _client.OnMessageReceived += value; }
             remove { _client.OnMessageReceived -= value; }
         }
+        public event EventHandler<OnMessageClearedArgs> OnMessageCleared
+        {
+            add { _client.OnMessageCleared += value; }
+            remove { _client.OnMessageCleared -= value; }
+        }
+        public event EventHandler<OnChatClearedArgs> OnChatCleared
+        {
+            add { _client.OnChatCleared += value; }
+            remove { _client.OnChatCleared -= value; }
+        }
+        public event EventHandler<OnUserJoinedArgs> OnUserJoined
+        {
+            add { _client.OnUserJoined += value; }
+            remove { _client.OnUserJoined -= value; }
+        }
+        public event EventHandler<OnUserBannedArgs> OnUserBanned
+        {
+            add { _client.OnUserBanned += value; }
+            remove { _client.OnUserBanned -= value; }
+        }
         public event EventHandler<ChannelPointsCustomRewardRedemptionArgs> OnRewardRedeemed
         {
             add { _eventsub.OnRewardRedeemed += value; }
             remove { _eventsub.OnRewardRedeemed -= value; }
+        }
+        public event EventHandler<ChannelFollowArgs> OnNewFollower
+        {
+            add { _eventsub.OnNewFollower += value; }
+            remove { _eventsub.OnNewFollower -= value; }
+        }
+        public event EventHandler<ChannelSubscribeArgs> OnNewSubscriber
+        {
+            add { _eventsub.OnNewSubscriber += value; }
+            remove { _eventsub.OnNewSubscriber -= value; }
         }
 
         public TwitchConnection(TwitchAccount account)
@@ -73,10 +103,10 @@ namespace TwitchChatTools.Model.Twitch
             _client.SendMessage(_selectedChannel, text);
         }
 
-        internal async Task<Dictionary<string, CustomReward>> GetCustomRewards()
+        internal async Task<CustomReward[]> GetCustomRewards()
         {
             var response = await _api.Helix.ChannelPoints.GetCustomRewardAsync(_selectedChannelId);
-            return response.Data.ToDictionary(x => x.Id);
+            return response.Data;
         }
     }
 }
