@@ -11,7 +11,7 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <SignAssembly>False</SignAssembly>
     <ErrorReport>prompt</ErrorReport>
-	<Version>0.0.0.3</Version>
+	<Version>0.0.0.4</Version>
     <FileVersion>$(Version)</FileVersion>
 	<AssemblyVersion>$(Version)</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
