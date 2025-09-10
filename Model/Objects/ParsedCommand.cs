@@ -10,6 +10,7 @@ namespace TwitchChatTools.Model.Objects
     internal class ParsedCommand
     {
         public ChatMessage? Message { get; set; } = null;
+        public TwitchChatUserInfo? From { get; set; } = null;
         public string Command { get; set; } = string.Empty;
         public string[] Args { get; set; } = new string[0];
 
@@ -24,13 +25,14 @@ namespace TwitchChatTools.Model.Objects
             return string.Join(" ", Args.Skip(startFrom + 1));
         }
 
-        public static ParsedCommand? TryParse(ChatMessage message)
+        public static ParsedCommand? TryParse(ChatMessage message, TwitchChatUserInfo user)
         {
             var input = message.Message;
             if (input.StartsWith(">"))
             {
                 var parsed = new ParsedCommand();
                 parsed.Message = message;
+                parsed.From = user;
 
                 var splited = input.Substring(1).Split(" ");
                 parsed.Command = splited.FirstOrDefault(string.Empty).ToLower();

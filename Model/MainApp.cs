@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Data;
-using TwitchChatTools.Model.Events;
+using TwitchChatTools.Model.Chat;
 using TwitchChatTools.Model.Objects;
 using TwitchChatTools.Model.Twitch;
 using TwitchChatTools.Model.UserScripts;
 using TwitchChatTools.Model.Utils;
+using TwitchLib.Client.Models;
 
 namespace TwitchChatTools.Model
 {
@@ -15,11 +16,12 @@ namespace TwitchChatTools.Model
         internal AppSettings Settings { get; }
         internal TwitchAccount Account { get; set; }
         internal TwitchConnection? Connection { get; set; }
-        internal ScriptsEventsHandler EventHandler { get; set; } = new ScriptsEventsHandler();
+        internal UserScriptRunEventHandler EventHandler { get; set; } = new UserScriptRunEventHandler();
         internal ChatMessageHandler MessageHandler { get; set; } = new ChatMessageHandler();
-        internal Dictionary<string, RewardInfo> Rewards { get; set; } = new Dictionary<string, RewardInfo>();
-        internal Dictionary<string, UserScript> Scripts { get; set; } = new Dictionary<string, UserScript>();
-        internal Dictionary<string, CustomCommand> Commands { get; set; } = new Dictionary<string, CustomCommand>();
+        internal Dictionary<string, RewardInfo> Rewards { get; set; } = [];
+        internal Dictionary<string, UserScript> Scripts { get; set; } = [];
+        internal Dictionary<string, CustomCommand> Commands { get; set; } = [];
+        internal Dictionary<string, TwitchChatUserInfo> Viewers { get; set; } = [];
 
         private MainApp()
         {
@@ -29,6 +31,7 @@ namespace TwitchChatTools.Model
             Account = ObjectFileSystem.LoadObject<TwitchAccount>(true);
             Scripts = ObjectFileSystem.LoadObject<Dictionary<string, UserScript>>(true, nameof(Scripts));
             Commands = ObjectFileSystem.LoadObject<Dictionary<string, CustomCommand>>(true, nameof(Commands));
+            Viewers = ObjectFileSystem.LoadObject<Dictionary<string, TwitchChatUserInfo>>(true, nameof(Viewers));
 
             Application.Current.Exit += OnAppExit;
         }
@@ -99,6 +102,22 @@ namespace TwitchChatTools.Model
             }).ToDictionary(x => x.Id);
         }
 
+        public TwitchChatUserInfo GetUserInfo(string nickname, ChatMessage chatData)
+        {
+            if (!Viewers.ContainsKey(nickname))
+            {
+                Viewers.Add(nickname, new TwitchChatUserInfo()
+                {
+                    Nickname = chatData.DisplayName,
+                    Right = GetChatUserRights(chatData)
+                });
+            }
+
+            var found = Viewers[nickname];
+            found.Right = GetChatUserRights(chatData);
+            return found;
+        }
+
         public void SaveSettings()
         {
             ObjectFileSystem.SaveObject(Account, true);
@@ -106,6 +125,7 @@ namespace TwitchChatTools.Model
             ObjectFileSystem.SaveObject(Rewards, false, nameof(Rewards));
             ObjectFileSystem.SaveObject(Scripts, false, nameof(Scripts));
             ObjectFileSystem.SaveObject(Commands, false, nameof(Commands));
+            ObjectFileSystem.SaveObject(Viewers, false, nameof(Viewers));
         }
 
         private void OnAppExit(object sender, ExitEventArgs e)
@@ -113,5 +133,16 @@ namespace TwitchChatTools.Model
             SaveSettings();
         }
 
+        private ChatUserRights GetChatUserRights(ChatMessage chatData)
+        {
+            var rights = ChatUserRights.Viewer;
+
+            if (chatData.IsVip) rights |= ChatUserRights.VIP;
+            if (chatData.IsModerator) rights |= ChatUserRights.Moderator;
+            if (chatData.IsSubscriber) rights |= ChatUserRights.Subscriber;
+            if (chatData.IsBroadcaster) rights |= ChatUserRights.Broadcaster;
+
+            return rights;
+        }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Text;
 using TwitchChatTools.Model.Objects;
 using TwitchChatTools.Model.Twitch;
+using TwitchChatTools.Model.Utils;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 
-namespace TwitchChatTools.Model.Events
+namespace TwitchChatTools.Model.Chat
 {
     internal class ChatMessageHandler
     {
@@ -14,7 +15,10 @@ namespace TwitchChatTools.Model.Events
         public event EventHandler<ParsedCommand>? OnCustomCommand;
         internal void OnMessage(object? Sender, OnMessageReceivedArgs e)
         {
-            var parsed = ParsedCommand.TryParse(e.ChatMessage);
+            var user = MainApp.Instance?.GetUserInfo(e.ChatMessage.Username, e.ChatMessage);
+            if (user == null) return;
+
+            var parsed = ParsedCommand.TryParse(e.ChatMessage, user);
             if (parsed != null)
             {
                 ProcessCommand(parsed, e.ChatMessage);
@@ -27,14 +31,12 @@ namespace TwitchChatTools.Model.Events
 
         private void ProcessCommand(ParsedCommand command, ChatMessage message)
         {
-            //message.UserType
-
             switch (command.Command)
             {
                 case "help":
                     var help = new StringBuilder();
 
-                    help.AppendLine(">help - Вывести список доступных команд;\r\n");
+                    help.AppendLine($">help - {Lang.Get("HelpMessage")};\r\n");
 
                     if (MainApp.Instance != null)
                     {

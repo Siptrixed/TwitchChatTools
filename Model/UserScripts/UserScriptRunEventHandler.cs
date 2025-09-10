@@ -1,17 +1,16 @@
 ﻿using Newtonsoft.Json.Linq;
 using TwitchChatTools.Model.Objects;
 using TwitchChatTools.Model.Twitch;
-using TwitchChatTools.Model.UserScripts;
 using TwitchLib.Api.Helix.Models.ChannelPoints;
 using TwitchLib.Client.Models;
 using TwitchLib.EventSub.Core.EventArgs.Channel;
 using TwitchLib.PubSub.Models.Responses.Messages.Redemption;
 
-namespace TwitchChatTools.Model.Events
+namespace TwitchChatTools.Model.UserScripts
 {
-    internal class ScriptsEventsHandler
+    internal class UserScriptRunEventHandler
     {
-        private static TwitchConnection? _connection => MainApp.Instance?.Connection;
+        //private static TwitchConnection? _connection => MainApp.Instance?.Connection;
 
         public void OnRewardRedeemed(object? sender, ChannelPointsCustomRewardRedemptionArgs e)
         {

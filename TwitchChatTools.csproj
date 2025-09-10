@@ -16,6 +16,7 @@
 	<AssemblyVersion>$(Version)</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
 	<Copyright>© 2025 Siptrixed</Copyright>
+	<DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

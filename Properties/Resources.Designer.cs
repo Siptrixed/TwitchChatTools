@@ -169,6 +169,15 @@ namespace TwitchChatTools.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на List available commands.
+        /// </summary>
+        public static string HelpMessage {
+            get {
+                return ResourceManager.GetString("HelpMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Hotkeys.
         /// </summary>
         public static string Hotkeys {

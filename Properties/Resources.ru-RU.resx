@@ -213,4 +213,7 @@
   <data name="Downloading" xml:space="preserve">
     <value>Скачивание...</value>
   </data>
+  <data name="HelpMessage" xml:space="preserve">
+    <value>Вывести список доступных команд</value>
+  </data>
 </root>

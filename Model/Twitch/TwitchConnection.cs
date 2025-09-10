@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using TwitchChatTools.Model.Utils;
 using TwitchLib.Api;
@@ -18,6 +19,8 @@ namespace TwitchChatTools.Model.Twitch
         private TwitchClient _client;
         private TwitchAPI _api;
         private TwitchAccount _account;
+
+        private List<string> _messageAfterLoad;
 
         private string _selectedChannel => MainApp.Instance?.Settings.ConnectToUsername ?? _account.Login;
         private string _selectedChannelId => MainApp.Instance?.Settings.ConnectToUserId ?? _account.UserID;
@@ -109,8 +112,15 @@ namespace TwitchChatTools.Model.Twitch
 
         internal async Task<CustomReward[]> GetCustomRewards()
         {
-            var response = await _api.Helix.ChannelPoints.GetCustomRewardAsync(_selectedChannelId);
-            return response.Data;
+            try
+            {
+                var response = await _api.Helix.ChannelPoints.GetCustomRewardAsync(_selectedChannelId);
+                return response.Data;
+            }
+            catch
+            {
+                return [];
+            }
         }
     }
 }
